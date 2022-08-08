@@ -28,7 +28,7 @@ class LinkedList:
         Insert node at end of the list
         :param data: integer data that will be used to create a node
         """
-        new_node = Node(new_data)
+        new_node = Node(data)
         new_node.next = self.head
         self.head = new_node
 
