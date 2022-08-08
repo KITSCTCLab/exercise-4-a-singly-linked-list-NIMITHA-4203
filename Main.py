@@ -34,7 +34,7 @@ class LinkedList:
         """
         It prints all the elements of list.
         """
-        # write code here
+        # write code here guhgiujg
 
 
 class Solution:
