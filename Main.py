@@ -13,10 +13,35 @@ class Node:
         self.next = next
 
 
+from typing import Optional
+
+
+class Node:
+    """
+    This class describes Node objects to act as elements of the LinkedList
+    Attributes:
+        -> data - stored associated data
+        -> next - link to next node
+    """
+
+    def __init__(self, data=None, next=None):
+        """
+        Initialises the Node with given attributes
+        """
+        self.data = data
+        self.next = next
+
+
 class LinkedList:
     """
-    Provide necessary documentation
+    This class implements LinkedList using Node objects
+    Methods:
+        -> insert_at_end - inserts node with data at the end of the list
+        -> status - displays all elements of the lisT
+    Attributes
+        -> self.head - contains first node of LinkedList, None if list empty
     """
+
     def __init__(self):
         """
         Initialize the head
@@ -28,66 +53,65 @@ class LinkedList:
         Insert node at end of the list
         :param data: integer data that will be used to create a node
         """
-        new_node = Node(data)
-        new_node.next = self.head
-        self.head = new_node
+        new = Node(data, None)
+        current = self.head
+        if current is None:
+            self.head = new
+        else:
+            while current.next is not None:
+                current = current.next
+            current.next = new
 
     def status(self):
         """
         It prints all the elements of list.
         """
-        x = []
-        temp = self.head
-        while(temp):
-            x += [temp.data]
-            temp = temp.next
-        print(x)
+        elements = []
+        current = self.head
+        while current:
+            elements.append(current.data)
+            current = current.next
+        print(elements)
 
 
 class Solution:
     """
-    Provide necessary documentation    """
+    Class implementing functions to add numbers in a LinkedListT
     
-    def addTwoNumbers(self, first_list: Optional[LinkedList], second_list: Optional[LinkedList]) -> Optional[LinkedList]:
+    """
+
+    def addTwoNumbers(self, first_list: Optional[LinkedList], second_list: Optional[LinkedList]) -> Optional[
+        LinkedList]:
         """
         :param first_list: Linkedlist with non-negative integers
         :param second_list: Linkedlist with non-negative integers
         :return: returns the sum as a linked list
         """
-        prev = None
-        temp = None
-        carry = 0
-        
-        while(first_list is not None or second_list is not None):            
-            fdata = 0 if first_list is None else first_list.data
-            sdata = 0 if second_list is None else second_list.data
-            Sum = carry + fdata + sdata
-            
-            carry = 1 if Sum >= 10 else 0
-            Sum = Sum if Sum < 10 else Sum % 10
-            temp = Node(Sum)
-            
-            if self.head is None:
-                self.head = temp
-            else:
-                prev.next = temp
-                
-            prev = temp
-            
-            if first_list is not None:
-                first_list = first_list.next
-            if second_list is not None:
-                second_list = second_list.next
-                
-        if carry > 0:
-            temp.next = Node(carry)    
-        
-        
+        result = self.get_num(first_list) + self.get_num(second_list)
+        sum_list = LinkedList()
+        for digit in list(map(int, str(result)[::-1])):
+            sum_list.insert_at_end(digit)
+        return sum_list
 
-# Do not edit the following code      
+    def get_num(self, l: Optional[LinkedList]) -> int:
+        """
+        :param l: LinkedList with non-negative integers
+        :return: returns digits of the list as a single integer
+        """
+        curr = l.head
+        if curr is None:
+            return 0
+        num = ""
+        while curr is not None:
+            num = str(curr.data) + num
+            curr = curr.next
+        return int(num)
+
+
+# Do not edit the following code
 # Create an instance for LinkedList
 first_list = LinkedList()
-# Create an another instance for LinkedList
+# Create an another instance for LinkedListT
 second_list = LinkedList()
 # Read data for first list
 data_for_first_list = list(map(int, input().strip().split(" ")))
